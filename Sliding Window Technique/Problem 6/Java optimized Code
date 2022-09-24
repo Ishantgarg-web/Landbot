@@ -1,0 +1,41 @@
+class Solution {
+    // checking both array are equal or not.
+    public static boolean both_array_equal(int arr1[],int arr2[])
+    {
+        for (int i=0;i<26;i++)
+        {
+            if(arr1[i]!=arr2[i])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+    public boolean checkInclusion(String s1, String s2) {
+        int freq1[]=new int[26];    // make frequency 1 that stores string s1 freq.
+        if(s2.length()<s1.length()) return false;
+        for (int i=0;i<s1.length();i++){ freq1[s1.charAt(i)-'a']++; }   
+        //store string s1 characters and their frequency.
+        int freq2[]=new int[26];
+        int i=0,j=0;
+        while(j<s2.length())   //check valid condition
+        {
+            freq2[s2.charAt(j)-'a']++;  //increase freq. for jth character.
+            if(j-i+1==s1.length())   //check size are equal or not.
+            {
+                if(both_array_equal(freq1,freq2)) return true;
+            }
+            if(j-i+1<s1.length())  //checking length of window<len(s1)
+            {
+                j++;   //increment j pointer
+            }
+            else
+            {
+                freq2[s2.charAt(i)-'a']--;   //decrease window size from left pointer
+                i++;  //increment left pointer
+                j++;  //increment right pointer
+            }
+        }
+        return false;
+    }
+}
