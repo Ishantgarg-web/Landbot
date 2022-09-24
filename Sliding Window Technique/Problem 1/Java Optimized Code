@@ -1,0 +1,21 @@
+static long maximumSumSubarray(int K, ArrayList<Integer> Arr,int N){
+      // code here
+        long max=0;
+			// first getting sum 
+			// of first K elements
+      for (int i=0; i<K; i++){
+            max += Arr.get(i);
+        }
+        long curr_sum = max;
+			// iterate from K to N-1 
+			// and subtract first element
+			// of current subarray and add
+			// next element in subarray
+        for (int i=K; i<N; i++)
+        {
+            curr_sum += Arr.get(i) - Arr.get(i-K);
+				// finding maximum between both
+           max = Math.min(max, curr_sum);
+        }
+        return max;   // finally, return answer
+}
