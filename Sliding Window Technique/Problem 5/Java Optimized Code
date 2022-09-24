@@ -1,0 +1,39 @@
+class Solution {
+    public static int[] make_new_array(int nums[])
+    {
+        //length of new array will be 2*length of original array
+        int nums2[]=new int[nums.length*2];  
+        // values of nums2 array will be nums[i%n] where n=nums.length
+        for (int i=0;i<nums.length*2;i++)
+        {
+            nums2[i]=nums[i%nums.length];
+        }
+        return nums2;
+    }
+    public int minSwaps(int[] nums) {
+        int ones=0; //stores final result
+        for (int i=0;i<nums.length;i++)
+        {
+            if(nums[i]==1) ones++;  //computer number of ones in original array
+        }
+        //make new array to overcome the problem of circular part
+        int nums2[]=make_new_array(nums);  
+        int count=0,right=ones,ans=count;
+        for (int i=0;i<right;i++)
+        {
+            if(nums2[i]==1) count++;  //count ones in initial subarray
+        } 
+        while(right<2*nums.length)  //checking valid condition
+        {
+            if(nums2[right]==1){  //increase the window size
+                count++;
+            }
+            if(nums2[right-ones]==1){ //decrease the window size by left
+                count--;
+            }
+            ans=(int)Math.max(ans,count);  //get maximum 
+            right++;
+        }
+        return ones-ans; //finally, return answer.
+    }
+}
