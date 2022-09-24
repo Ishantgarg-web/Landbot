@@ -1,0 +1,22 @@
+class Solution {
+    public int numberOfSubstrings(String s) {
+        // i is left pointer, j is right pointer and count stores the result
+        int i=0,j=0,count=0; 
+        int c[]=new int[3];
+        // c array stores count of each character - a,b,c
+        for (j=0;j<s.length();j++)
+        {
+            c[s.charAt(j)-'a']++;   //increment count of j pointer character
+            //check count is greater than zero or not
+            while(c[0]>0 && c[1]>0 && c[2]>0)  
+            {
+                // add all substrings made from i to j,j+1,...n-1
+                count+=(s.length()-j); 
+                // decrement the frequency of ith index character
+                c[s.charAt(i)-'a']--;
+                i++;
+            }
+        }
+        return count;  // finally return result
+    }
+}
