@@ -1,0 +1,36 @@
+class Solution {
+    public static void put_values_in_map(HashMap<Character,Integer> map,String s,int i,int j){
+        for (int p=0;p<=j;p++){
+            char c=s.charAt(p);  
+            map.put(c,map.getOrDefault(c,0)+1); 
+            // put values in map,
+            // if it contains -> then it put existed value+1
+            // else -> put 1
+        }
+    }
+    public List<Integer> findAnagrams(String s, String p) {
+        List<Integer> ans=new ArrayList<>(); //store final result
+        if(s.length()<p.length()){  //length of string s should be greater than len(p)
+            return ans;
+        }
+        int left=0,right=0;   
+        HashMap<Character,Integer> need=new HashMap<>(); //create map to store p string freq
+        HashMap<Character,Integer> window=new HashMap<>(); // map to store window of len(p)
+        put_values_in_map(need,p,0,p.length()-1);  //put values in map of p string
+        put_values_in_map(window,s,0,p.length()-1); // put values in map of s string 
+        if(window.equals(need)){ans.add(0);}  //check both map are equal or not
+        right=p.length();   
+        while(right<s.length()){   //checking valid condition of while loop
+            char c1=s.charAt(left), c2=s.charAt(right);   
+            if(window.containsKey(c1)){window.put(c1,window.get(c1)-1);} // dec. freq of c1
+            if(window.containsKey(c1) && window.get(c1)==0){window.remove(c1);}
+            left++;   //increment the left index.
+            window.put(c2,window.getOrDefault(c2,0)+1);
+            if(window.equals(need)){  //checking both map are equal or not.
+                ans.add(left);
+            }
+            right++;    //increment the right index.
+        }
+        return ans;
+    }
+}
